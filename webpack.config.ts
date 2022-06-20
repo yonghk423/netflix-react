@@ -1,10 +1,15 @@
 import webpack from 'webpack';
+import 'webpack-dev-server';
 import path from 'path';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const config: webpack.Configuration = {
     name: 'netflix-react',
-    mode: 'development',
-    devtool: 'eval',
+    mode: isDevelopment ? 'development' : 'production',
+    devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
@@ -23,25 +28,24 @@ const config: webpack.Configuration = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'babel-laoder',
+                loader: 'babel-loader',
                 options: {
-                    presets:[
-                        [
-                            '@babel/preset-env',
-                            {
-                                target:{browers: ['last 2 chrome version']},
-                                
-                            },                            
-                        ],
-                        '@babel/preset-react',
-                        '@babel/preset-typescript',                        
-                    ],
+                    presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: { browsers: ['last 2 chrome versions'] },
+              },
+            ],
+            '@babel/preset-react',
+            '@babel/preset-typescript',
+          ],
                     env: {
                         development: {
-                            
+                            plugins: [['@emotion', { sourceMap: true }], require.resolve('react-refresh/babel')],
                         },
                         production: {
-
+                            plugins: ['@emotion'],
                         }
                     },
                 },
@@ -50,15 +54,39 @@ const config: webpack.Configuration = {
             {
                 test: /\.css?$/,
                 use: ['style-loader', 'css-loader'],
-            }
-        ]
+            },
+        ],
     },
     plugins: [
-
+        new ForkTsCheckerWebpackPlugin({
+      async: false,
+    //   eslint: {
+    //     files: "./src/**/*",
+    //   },
+    }),
+    new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
     ],
     output : {
         path: path.join(__dirname, 'dist'),
         filename: '[name].js',
         publicPath: '/dist/',
     }, //출력
+    devServer: {
+        historyApiFallback: true, // react router
+        port: 8080,
+        static: { directory: path.resolve(__dirname) }
+    }
 }
+
+if (isDevelopment && config.plugins) {
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  config.plugins.push(new ReactRefreshWebpackPlugin());
+//   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'server', openAnalyzer: true }));
+}
+if (!isDevelopment && config.plugins) {
+  config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
+//   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+}
+
+
+export default config;

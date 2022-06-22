@@ -5,8 +5,8 @@ const key = process.env.REACT_APP_API_KEY;
 const BASE_PATH = "https://api.themoviedb.org/3/";
 
 const Home = () => {
-    // const { data } = useSWR(`${BASE_PATH}movie/now_playing?api_key=${key}`);
-    // console.log(data);
+    const { data } = useSWR(`${BASE_PATH}movie/now_playing?api_key=${key}`);
+    console.log(data);
     return (
     <h1>Home</h1>
     

@@ -3,6 +3,7 @@ import App from './app'
 import { theme } from "./src/theme";
 import { ThemeProvider } from "styled-components";
 import { createGlobalStyle } from "styled-components";
+import { SWRConfig } from 'swr';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -74,9 +75,13 @@ const container = document.getElementById('app');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 root.render(
     <>
+    <SWRConfig
+    value={{ fetcher:(url:string) => fetch(url).then((response) => response.json())}}
+    >
     <ThemeProvider theme={theme}>
         <GlobalStyle />
         <App />
     </ThemeProvider>
+    </SWRConfig>
     </>
 );

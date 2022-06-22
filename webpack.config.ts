@@ -3,8 +3,10 @@ import 'webpack-dev-server'; //개발용 서버
 import path from 'path';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'; 
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'; //hot-reloading
-
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const dotenv = require("dotenv")
+dotenv.config();
+// console.log(process.env);
 
 const config: webpack.Configuration = {
     name: 'netflix-react',
@@ -19,11 +21,11 @@ const config: webpack.Configuration = {
             '@pages': path.resolve(__dirname, 'pages'),
             '@utils': path.resolve(__dirname, 'utils'),
             '@typings': path.resolve(__dirname, 'typings'),
-        },
+        },        
     },
     entry : {
         app: './client'
-    }, //입력
+    }, //입력    
     module: {
         rules: [
             {
@@ -57,7 +59,10 @@ const config: webpack.Configuration = {
     },
     plugins: [
         new ForkTsCheckerWebpackPlugin({ async: false }),
-        new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
+        new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),        
+        new webpack.DefinePlugin({
+            "process.env": JSON.stringify(process.env),
+        }),
     ],
     output : {
         path: path.join(__dirname, 'dist'),

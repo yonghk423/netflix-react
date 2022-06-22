@@ -142,7 +142,7 @@ function Header() {
           <Input
           transition={{ type: "linear" }}
           animate={{ scaleX: searchOpen ? 1 : 0 }}
-          placeholder="Search for movie or tv show..."
+          placeholder="Search.."
         />
         </Search>        
       {/* </Col> */}

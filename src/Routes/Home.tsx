@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useMatch, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import useSWR from 'swr';
 import { motion, AnimatePresence } from "framer-motion";
@@ -51,6 +52,7 @@ const Box = styled(motion.div)<{ bgphoto: string }>`
   background-position: center center;
   height: 200px;
   font-size: 66px;
+  
   &:first-child {
     transform-origin: center left;
   }
@@ -137,6 +139,9 @@ const Home = () => {
     const { data } = useSWR<GetMoviesResult>(`${BASE_PATH}movie/now_playing?api_key=${key}`);
     console.log(data);
 
+    const navigate = useNavigate();
+    const movieMatch = useMatch("/movies/:movieId");
+    console.log(movieMatch);
     const incraseIndex = () => {
     if (data) {
         if (leaving) return;
@@ -158,6 +163,10 @@ const Home = () => {
     }
   };
   const toggleLeaving = () => setLeaving((prev) => !prev);
+
+  const onBoxClicked = (movieId:number) => {
+    navigate(`/movies/${movieId}`);
+  }
 
     return (
         <>
@@ -182,7 +191,9 @@ const Home = () => {
                   .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box
+                      layoutId={movie.id + ""}
                       key={movie.id}
+                      onClick={() => onBoxClicked(movie.id)}
                       bgphoto={makeImagePath(movie.backdrop_path)}
                       whileHover="hover"
                       initial="normal"
@@ -197,6 +208,23 @@ const Home = () => {
               </Row>
             </AnimatePresence>
           </Slider>
+          <AnimatePresence>
+            {movieMatch ? (
+              <motion.div
+                layoutId={movieMatch.params.movieId}
+                style={{
+                  position: "absolute",
+                  width: "40vw",
+                  height: "80vh",
+                  backgroundColor: "red",
+                  top: 50,
+                  left: 0,
+                  right: 0,
+                  margin: "0 auto",
+                }}
+              />
+            ) : null}
+          </AnimatePresence>
           </>    
     )
 }

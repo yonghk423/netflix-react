@@ -10,14 +10,14 @@ export function makeImagePath(id: string) {
   return `https://image.tmdb.org/t/p/original${id}`;
 }
 
-const Banner = styled.div<{ bgPhoto: string }>`
+const Banner = styled.div<{ bgphoto: string }>`
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 60px; 
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url(${(props) => props.bgPhoto});
+    url(${(props) => props.bgphoto});
   background-size: cover;
 `;
 
@@ -44,9 +44,9 @@ const Row = styled(motion.div)`
   width: 100%;
 `;
 
-const Box = styled(motion.div)<{ bgPhoto: string }>`
+const Box = styled(motion.div)<{ bgphoto: string }>`
   background-color: white;
-  background-image: url(${(props) => props.bgPhoto});
+  background-image: url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
   height: 200px;
@@ -93,10 +93,22 @@ const Home = () => {
 
     const incraseIndex = () => {
     if (data) {
-      if (leaving) return;
-      toggleLeaving();
-    
-    setIndex((prev) => (prev + 1))
+        if (leaving) return;
+        toggleLeaving();
+        const totalMovies = data.results.length; // 영화 총 개수 
+        console.log(totalMovies);
+        const maxIndex = Math.floor(totalMovies / offset) -1; 
+        console.log(maxIndex);
+        /*총 페이지수 한 페이지에 영화를 6편씩 보여준다. 
+        따라서 영화 총 개수 ex) 18개  / offset = 6개를 나누면 
+        3페이지를 사용하는 것 */    
+        setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+        /* 
+        prev는 const [index, setIndex] = useState(0);의 초기 값은 0으로 시작한다 
+        삼항 연산자를 통해 maxIndex 값 즉 총 페이지 개수와 prev와 같다는 것은 페이지를 끝까지 넘겼다는 뜻으로 
+        첫페이지 값인 index 값 0을 줌으로서 상태를 변경함에 따라 다시 맨처음 페이지로 가게 된다.
+        그리고 앞 조건이 아니라면 페이지수를 넘기며 뒤에 남은 영화 목록을 보여주도록 한다.
+        */
     }
   };
   const toggleLeaving = () => setLeaving((prev) => !prev);
@@ -105,7 +117,7 @@ const Home = () => {
         <>
         <Banner
             onClick={incraseIndex}
-            bgPhoto={makeImagePath(data?.results[0]?.backdrop_path || "")}
+            bgphoto={makeImagePath(data?.results[0]?.backdrop_path || "")}
           >
             <Title>{data?.results[0].title}</Title>
             <Overview>{data?.results[0].overview}</Overview>
@@ -125,7 +137,7 @@ const Home = () => {
                   .map((movie) => (
                     <Box
                       key={movie.id}
-                      bgPhoto={makeImagePath(movie.backdrop_path)}
+                      bgphoto={makeImagePath(movie.backdrop_path)}
                     />
                   ))}
               </Row>

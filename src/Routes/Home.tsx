@@ -51,6 +51,12 @@ const Box = styled(motion.div)<{ bgphoto: string }>`
   background-position: center center;
   height: 200px;
   font-size: 66px;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
 
 const rowVariants = {
@@ -62,6 +68,21 @@ const rowVariants = {
   },
   exit: {
     x: -window.outerWidth - 5,
+  },
+};
+
+const boxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    y: -50,
+    transition: {
+      delay: 0.5,
+      duaration: 0.3,
+      type: "tween",
+    },
   },
 };
 
@@ -83,6 +104,7 @@ export interface GetMoviesResult {
   total_pages: number;
   total_results: number;
 }
+
 const offset = 6;
 
 const Home = () => {
@@ -138,6 +160,10 @@ const Home = () => {
                     <Box
                       key={movie.id}
                       bgphoto={makeImagePath(movie.backdrop_path)}
+                      whileHover="hover"
+                      initial="normal"
+                      variants={boxVariants}
+                      transition={{ type: "tween" }}
                     />
                   ))}
               </Row>

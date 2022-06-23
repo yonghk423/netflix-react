@@ -95,9 +95,8 @@ const Home = () => {
     if (data) {
       if (leaving) return;
       toggleLeaving();
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+    
+    setIndex((prev) => (prev + 1))
     }
   };
   const toggleLeaving = () => setLeaving((prev) => !prev);
@@ -106,10 +105,10 @@ const Home = () => {
         <>
         <Banner
             onClick={incraseIndex}
-            bgPhoto={makeImagePath(data?.results[1]?.backdrop_path || "")}
+            bgPhoto={makeImagePath(data?.results[0]?.backdrop_path || "")}
           >
-            <Title>{data?.results[1].title}</Title>
-            <Overview>{data?.results[1].overview}</Overview>
+            <Title>{data?.results[0].title}</Title>
+            <Overview>{data?.results[0].overview}</Overview>
         </Banner>
         <Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
@@ -121,8 +120,7 @@ const Home = () => {
                 transition={{ type: "tween", duration: 1 }}
                 key={index}
               >
-                {data?.results
-                  .slice(1)
+                {data?.results                  
                   .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box

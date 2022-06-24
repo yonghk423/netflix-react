@@ -65,20 +65,7 @@ const config: webpack.Configuration = {
         new webpack.DefinePlugin({
             "process.env": JSON.stringify(process.env),
         }),
-        new HtmlWebpackPlugin(),
-        new S3Plugin({
-      // Include uploading of css js html
-      include: /.*\.(css|js|html)/,
-      // s3Options are required
-      s3Options: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: 'ap-northeast-2',
-      },
-      s3UploadOptions: {
-        Bucket: 'yonghee-project'
-      }
-    })
+        new HtmlWebpackPlugin(),    
     ],
     output : {
         path: path.join(__dirname, 'dist'),

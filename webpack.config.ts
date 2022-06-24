@@ -4,10 +4,9 @@ import path from 'path';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'; 
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'; //hot-reloading
 const isDevelopment = process.env.NODE_ENV !== 'production';
-const dotenv = require("dotenv")
+import dotenv from "dotenv";
 dotenv.config();
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const S3Plugin = require('webpack-s3-plugin')
+import HtmlWebPackPlugin from "html-webpack-plugin";
 // console.log(process.env);
 
 const config: webpack.Configuration = {
@@ -65,7 +64,10 @@ const config: webpack.Configuration = {
         new webpack.DefinePlugin({
             "process.env": JSON.stringify(process.env),
         }),
-        new HtmlWebpackPlugin(),    
+        new HtmlWebPackPlugin({
+      template: "./public/index.html",
+      filename: "./index.html"
+    })   
     ],
     output : {
         path: path.join(__dirname, 'dist'),

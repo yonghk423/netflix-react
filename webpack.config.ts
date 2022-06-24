@@ -6,7 +6,7 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'; //
 const isDevelopment = process.env.NODE_ENV !== 'production';
 import dotenv from "dotenv";
 dotenv.config();
-import HtmlWebPackPlugin from "html-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 // console.log(process.env);
 
 const config: webpack.Configuration = {
@@ -64,10 +64,7 @@ const config: webpack.Configuration = {
         new webpack.DefinePlugin({
             "process.env": JSON.stringify(process.env),
         }),
-        new HtmlWebPackPlugin({
-      template: "./public/index.html",
-      filename: "./index.html"
-    })   
+        new HtmlWebpackPlugin()   
     ],
     output : {
         path: path.join(__dirname, 'dist'),

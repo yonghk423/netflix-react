@@ -11,7 +11,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const config: webpack.Configuration = {
     name: 'netflix-react',
-    mode: isDevelopment ? 'development' : 'production',
+    mode: 'production',
     devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -30,6 +30,14 @@ const config: webpack.Configuration = {
     module: {
         rules: [
             {
+                test: /\.html$/,
+                    use: [
+                        {
+                            loader: "html-loader"
+                        }
+                    ]
+            },
+            {
                 test: /\.tsx?$/,
                 loader: 'babel-loader',
                 options: {
@@ -41,14 +49,14 @@ const config: webpack.Configuration = {
               },
             ],
             '@babel/preset-react',
-            '@babel/preset-typescript',
+            '@babel/preset-typescript',            
           ],
         env: {
             development: {
             plugins: [require.resolve('react-refresh/babel')],
                 },    
             },
-        },
+        },        
         exclude: path.join(__dirname, 'node_modules'),
             
     },

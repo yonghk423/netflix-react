@@ -117,9 +117,9 @@ function Header() {
              </Link>
           </Item>     
           <Item>
-            <Link to="/tv">  
+            {/* <Link to="/tv">  
               TV Shows {tvMatch && <Circle layoutId="circle"/>}
-            </Link>
+            </Link> */}
           </Item>
         </Items>
       </ItemsBox>

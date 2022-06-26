@@ -6,12 +6,12 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'; //
 const isDevelopment = process.env.NODE_ENV !== 'production';
 import dotenv from "dotenv";
 dotenv.config();
-import HtmlWebpackPlugin from "html-webpack-plugin";
+// import HtmlWebpackPlugin from "html-webpack-plugin";
 // console.log(process.env);
 
 const config: webpack.Configuration = {
     name: 'netflix-react',
-    mode: 'production',
+    mode: isDevelopment ? 'development' : 'production',
     devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -72,7 +72,7 @@ const config: webpack.Configuration = {
         new webpack.DefinePlugin({
             "process.env": JSON.stringify(process.env),
         }),
-        new HtmlWebpackPlugin()   
+        // new HtmlWebpackPlugin()   
     ],
     output : {
         path: path.join(__dirname, 'dist'),

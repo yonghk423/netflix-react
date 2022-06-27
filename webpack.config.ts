@@ -46,10 +46,11 @@ const config: webpack.Configuration = {
               '@babel/preset-env',
               {
                 targets: { browsers: ['last 2 chrome versions'] },
+                debug: isDevelopment,
               },
             ],
             '@babel/preset-react',
-            '@babel/preset-typescript',            
+            '@babel/preset-typescript',
           ],
         env: {
             development: {
@@ -72,6 +73,7 @@ const config: webpack.Configuration = {
         new webpack.DefinePlugin({
             "process.env": JSON.stringify(process.env),
         }),
+        
         // new HtmlWebpackPlugin()   
     ],
     output : {

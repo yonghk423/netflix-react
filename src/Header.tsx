@@ -145,7 +145,6 @@ function Header() {
           placeholder="Search.."
         />
         </Search>        
-      {/* </Col> */}
     </Nav>
   );
 }

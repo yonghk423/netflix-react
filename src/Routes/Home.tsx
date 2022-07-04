@@ -185,7 +185,7 @@ const Home = () => {
     const movieMatch = useMatch("/movies/:movieId");
     const { scrollY } = useViewportScroll();
     console.log(movieMatch);
-    const incraseIndex = () => {
+    const increaseIndex = () => {
     if (data) {
         if (leaving) return;
         toggleLeaving();
@@ -219,7 +219,7 @@ const Home = () => {
     return (
         <>
         <Banner
-            onClick={incraseIndex}
+            onClick={increaseIndex}
             bgphoto={makeImagePath(data?.results[0]?.backdrop_path || "")}
           >
             <Title>{data?.results[0].title}</Title>

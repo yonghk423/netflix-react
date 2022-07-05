@@ -10,7 +10,7 @@ dotenv.config();
 // console.log(process.env);
 
 const config: webpack.Configuration = {
-    name: 'netflix-react',
+    name: 'tdd-react',
     mode: isDevelopment ? 'development' : 'production',
     devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
     resolve: {
@@ -84,7 +84,9 @@ const config: webpack.Configuration = {
     devServer: {
         historyApiFallback: true, // react router
         port: 8080,
-        static: { directory: path.resolve(__dirname) }
+        static: { 
+            directory: path.resolve(__dirname)
+         }
     }
 }
 

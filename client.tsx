@@ -4,7 +4,6 @@ import { theme } from "./src/theme";
 import { ThemeProvider } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { SWRConfig } from 'swr';
-
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
 html, body, div, span, applet, object, iframe,
@@ -60,9 +59,9 @@ table {
 body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
-  color:${(props) => props.theme.white.darker};
+  /* color:${(props) => props.theme.white.darker}; */
   line-height: 1.2;
-  background-color: black;
+  /* background-color: black; */
 }
 a {
   text-decoration:none;

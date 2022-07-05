@@ -5,10 +5,12 @@ export const apiHandler = [
     return res(
       ctx.json([
         {
+          id: "1",  
           name: "America",
           imagePath: "/images/america.jpeg",
         },
         {
+          id: "2",  
           name: "England",
           imagePath: "/images/england.jpeg",
         },
